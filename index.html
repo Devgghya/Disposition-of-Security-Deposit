@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/png" sizes="40x40" href="favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disposition of Security Deposit</title>
+  <style>
+    :root {
+      --border: #cfd4da;
+      --header-bg: #eff6ff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #1e40af;
+      --primary: #2563eb;
+      --max-width: 900px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      color: var(--text);
+      background: #f1f5f9;
+      margin: 0;
+      padding: 0 0 48px;
+    }
+
+    .page {
+      background: white;
+      max-width: var(--max-width);
+      margin: 24px auto;
+      padding: 28px 36px 40px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0.3px;
+      color: var(--accent);
+    }
+
+    .company-badge {
+      text-align: right;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .right-header {
+      text-align: right;
+    }
+
+    .right-header label {
+      text-align: right;
+    }
+
+    .right-header input {
+      text-align: right;
+    }
+
+    .controls {
+      max-width: var(--max-width);
+      margin: 16px auto 0;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-start;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      background: #0ea5e9;
+      color: white;
+      padding: 10px 16px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    button.secondary { background: #334155; }
+
+    button:hover { background: #0284c7; }
+
+    button.secondary:hover { background: #1f2937; }
+
+    button:active { transform: translateY(1px); }
+
+    .section-title {
+      background: var(--header-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      padding: 10px 12px;
+      font-weight: 700;
+      margin: 24px 0 12px;
+      letter-spacing: 0.2px;
+      color: var(--accent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.2px;
+    }
+
+    input[type="text"], input[type="date"], input[type="number"], textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 14px;
+      color: var(--text);
+      background: white;
+    }
+
+    textarea { 
+      resize: vertical; 
+      min-height: 70px; 
+      font-family: inherit;
+      line-height: 1.4;
+    }
+
+    .desc-textarea {
+      min-height: 60px;
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 8px;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--header-bg);
+      text-align: left;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .amount-col { width: 140px; text-align: right; }
+
+    .subtotal-row td { font-weight: 700; background: #f9fafb; }
+
+    .totals-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-top: 12px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .final-box {
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      margin-top: 12px;
+      background: #f9fafb;
+    }
+
+    .final-amount {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 8px;
+    }
+
+    .two-col {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .half { flex: 1; min-width: 260px; }
+
+    .signature-line {
+      border-bottom: 1px solid #000;
+      height: 32px;
+      margin: 24px 0 6px;
+    }
+
+    .signature-label { font-size: 13px; color: var(--muted); }
+
+    .help-text { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-actions { display: flex; gap: 8px; }
+
+    .action-btn {
+      background: #e2e8f0;
+      color: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+
+    .action-btn:hover { background: #cbd5e1; }
+
+    .action-btn.danger { background: #fecdd3; border-color: #fda4af; }
+
+    .action-btn.danger:hover { background: #fca5a5; }
+
+    .print-value { display: none; white-space: pre-wrap; }
+
+    .amount-input { text-align: right; }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page {
+        margin: 0;
+        max-width: 100%;
+        box-shadow: none;
+        border: none;
+        padding: 18mm 16mm 20mm;
+      }
+      .controls, .help-text, .category-actions, .action-btn { display: none !important; }
+      .actions-column { display: none !important; }
+      input, textarea, select { display: none !important; }
+      .print-value { display: block !important; min-height: 18px; }
+      button { display: none !important; }
+      @page { size: auto; margin: 12mm; }
+      .section-title { background: #eff6ff !important; border-left-color: #2563eb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      th { background: #eff6ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .company-badge { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button onclick="handlePrint()">Print / Save PDF</button>
+    <button class="secondary" onclick="handleExportCSV()">Export CSV</button>
+  </div>
+
+  <div class="page">
+    <header class="two-col">
+      <div class="half">
+        <h1>Disposition of Security Deposit</h1>
+        <div class="grid">
+          <div>
+            <label for="landlordName">Landlord</label>
+            <input id="landlordName" type="text" value="Nice Properties Group LLC" data-print-target="landlordNamePrint">
+            <div id="landlordNamePrint" class="print-value"></div>
+          </div>
+          <div>
+            <label for="landlordAddress">Address</label>
+            <input id="landlordAddress" type="text" value="1525 AVIATION BLVD STE 506, REDONDO BEACH, CA 90278" data-print-target="landlordAddressPrint">
+            <div id="landlordAddressPrint" class="print-value"></div>
+          </div>
+          <div>
+            <label for="landlordEmail">Email</label>
+            <input id="landlordEmail" type="text" value="nicepropertiesgroup@gmail.com" data-print-target="landlordEmailPrint">
+            <div id="landlordEmailPrint" class="print-value"></div>
+          </div>
+        </div>
+      </div>
+      <div class="half right-header">
+        <div class="company-badge">Nice Properties Group LLC</div>
+        <div>
+          <label for="datePrepared">Date Prepared</label>
+          <input id="datePrepared" type="date" data-print-target="datePreparedPrint">
+          <div id="datePreparedPrint" class="print-value"></div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="section-title">Tenant &amp; Lease Info</div>
+      <div class="grid">
+        <div>
+          <label for="tenantNames">To Tenant(s)</label>
+          <input id="tenantNames" type="text" data-print-target="tenantNamesPrint" placeholder="Tenant names">
+          <div id="tenantNamesPrint" class="print-value"></div>
+        </div>
+        <div>
+          <label for="premises">Premises (Rental Unit)</label>
+          <input id="premises" type="text" data-print-target="premisesPrint" placeholder="Rental property address">
+          <div id="premisesPrint" class="print-value"></div>
+        </div>
+        <div>
+          <label for="moveOutDate">Move Out Date</label>
+          <input id="moveOutDate" type="date" data-print-target="moveOutDatePrint">
+          <div id="moveOutDatePrint" class="print-value"></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;">
+        <label for="forwardingAddress">Forwarding Address</label>
+        <textarea id="forwardingAddress" data-print-target="forwardingAddressPrint" placeholder="Street, City, State, ZIP"></textarea>
+        <div id="forwardingAddressPrint" class="print-value"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">1. Summary of Deposits Held</div>
+      <table>
+        <tr>
+          <th style="width:70%;">Description</th>
+          <th class="amount-col">Amount</th>
+        </tr>
+        <tr>
+          <td>Original Security Deposit</td>
+          <td class="amount-col">
+            <input id="originalDeposit" class="amount-input" type="text" value="0" data-print-target="originalDepositPrint">
+            <div id="originalDepositPrint" class="print-value"></div>
+          </td>
+        </tr>
+        <tr class="subtotal-row">
+          <td><strong>TOTAL DEPOSITS HELD</strong></td>
+          <td class="amount-col" id="totalDepositsDisplay">$0.00</td>
+        </tr>
+      </table>
+    </section>
+
+    <section>
+      <div class="section-title">2. Itemized Deductions</div>
+
+      <div id="deductions"></div>
+
+      <div class="totals-row">
+        <div>Total Deductions</div>
+        <div id="totalDeductionsDisplay">- $0.00</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">3. Final Disposition</div>
+      <div class="final-box">
+        <div class="grid">
+          <div><strong>Total Deposits Held:</strong> <span id="finalTotalDeposits">$0.00</span></div>
+          <div><strong>Less Total Deductions:</strong> <span id="finalTotalDeductions">- $0.00</span></div>
+        </div>
+        <div class="final-amount" id="finalOutcome">Refund Due to Tenant: $0.00</div>
+      </div>
+    </section>
+
+    <section style="margin-top:16px; font-size: 12px; color: #111827; line-height: 1.55;">
+      <div class="section-title" style="margin-top:0;">Legal Disclaimers</div>
+      <p>
+        Pursuant to California Civil Code § 1950.5, an itemized statement and supporting documentation
+        must be provided within 21 calendar days after the tenant vacates. Receipts for deductions
+        exceeding $125 are attached or will be provided upon request. If the landlord cannot furnish
+        documentation within 21 days, a good-faith estimate is provided and actual receipts will follow
+        when available. Refunds, if any, will be mailed to the forwarding address provided by the tenant.
+        If an amount is owed, please remit payment promptly to the landlord at the address above.
+      </p>
+    </section>
+
+    <section class="two-col" style="margin-top:18px;">
+      <div class="half">
+        <div class="signature-line"></div>
+        <div class="signature-label">Landlord/Agent Signature</div>
+      </div>
+      <div class="half">
+        <div class="signature-line"></div>
+        <div class="signature-label">Date</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Helpers for currency parsing and formatting
+    function sanitizeCurrency(value) {
+      if (!value) return 0;
+      const cleaned = String(value).replace(/[^0-9.-]/g, '');
+      const num = parseFloat(cleaned);
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function formatCurrency(value) {
+      const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+      return formatter.format(value);
+    }
+
+    // Sync the printable text for a given input/textarea
+    function syncPrintValue(input) {
+      const targetId = input.dataset.printTarget;
+      if (!targetId) return;
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      if (input.type === 'date' && input.value) {
+        const dt = new Date(input.value + 'T00:00:00');
+        target.textContent = dt.toLocaleDateString();
+      } else if (input.classList.contains('amount-input')) {
+        target.textContent = formatCurrency(sanitizeCurrency(input.value));
+      } else {
+        target.textContent = input.value;
+      }
+    }
+
+    // Category configuration
+    const categories = [
+      { id: 'rent', label: 'A. Unpaid Rent' },
+      { id: 'cleaning', label: 'B. Cleaning' },
+      { id: 'repairs', label: 'C. Repairs & Damages' },
+      { id: 'other', label: 'D. Other' }
+    ];
+
+    const state = {
+      subtotals: {
+        rent: 0,
+        cleaning: 0,
+        repairs: 0,
+        other: 0
+      }
+    };
+
+    function createLineRow(categoryId, tbody) {
+      const tr = document.createElement('tr');
+
+      const descTd = document.createElement('td');
+      const descInput = document.createElement('textarea');
+      descInput.className = 'desc-textarea';
+      descInput.rows = 3;
+      descInput.placeholder = 'Description / Invoice # / Hours Spent';
+      const descPrint = document.createElement('div');
+      descPrint.className = 'print-value';
+      descInput.dataset.printTarget = `${categoryId}-${Date.now()}-${Math.random().toString(16).slice(2)}-print-desc`;
+      descPrint.id = descInput.dataset.printTarget;
+      descInput.addEventListener('input', () => syncPrintValue(descInput));
+      descTd.appendChild(descInput);
+      descTd.appendChild(descPrint);
+
+      const amtTd = document.createElement('td');
+      amtTd.className = 'amount-col';
+      const amtInput = document.createElement('input');
+      amtInput.type = 'text';
+      amtInput.className = 'amount-input';
+      amtInput.placeholder = '0.00';
+      amtInput.dataset.printTarget = `${categoryId}-${Date.now()}-${Math.random().toString(16).slice(2)}-print-amt`;
+      const amtPrint = document.createElement('div');
+      amtPrint.className = 'print-value';
+      amtPrint.id = amtInput.dataset.printTarget;
+      amtInput.addEventListener('input', () => {
+        syncPrintValue(amtInput);
+        recalcCategory(categoryId);
+      });
+      amtTd.appendChild(amtInput);
+      amtTd.appendChild(amtPrint);
+
+      const removeTd = document.createElement('td');
+      removeTd.className = 'actions-column';
+      removeTd.style.width = '90px';
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'action-btn danger';
+      removeBtn.textContent = 'Remove';
+      removeBtn.addEventListener('click', () => {
+        const rows = tbody.querySelectorAll('tr');
+        if (rows.length <= 1) return; // keep at least one row
+        tr.remove();
+        recalcCategory(categoryId);
+      });
+      removeTd.appendChild(removeBtn);
+
+      tr.appendChild(descTd);
+      tr.appendChild(amtTd);
+      tr.appendChild(removeTd);
+
+      tbody.insertBefore(tr, tbody.lastElementChild);
+
+      // Initialize print text
+      syncPrintValue(descInput);
+      syncPrintValue(amtInput);
+    }
+
+    function buildCategorySection(category) {
+      const wrapper = document.createElement('div');
+      wrapper.style.marginTop = '12px';
+
+      const header = document.createElement('div');
+      header.className = 'category-header';
+      const title = document.createElement('div');
+      title.textContent = category.label;
+      header.appendChild(title);
+
+      const actions = document.createElement('div');
+      actions.className = 'category-actions';
+      const addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.className = 'action-btn';
+      addBtn.textContent = 'Add Item';
+      addBtn.addEventListener('click', () => createLineRow(category.id, tbody));
+      actions.appendChild(addBtn);
+      header.appendChild(actions);
+
+      const table = document.createElement('table');
+      const thead = document.createElement('thead');
+      thead.innerHTML = `
+        <tr>
+          <th>Description / Invoice # / Hours Spent</th>
+          <th class="amount-col">Amount</th>
+          <th class="actions-column" style="width:90px;">Actions</th>
+        </tr>
+      `;
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      const subtotalRow = document.createElement('tr');
+      subtotalRow.className = 'subtotal-row';
+      subtotalRow.innerHTML = `
+        <td><strong>Subtotal ${category.label}</strong></td>
+        <td class="amount-col" id="subtotal-${category.id}">$0.00</td>
+        <td class="actions-column"></td>
+      `;
+      tbody.appendChild(subtotalRow);
+      table.appendChild(tbody);
+
+      createLineRow(category.id, tbody);
+
+      wrapper.appendChild(header);
+      wrapper.appendChild(table);
+
+      return wrapper;
+    }
+
+    function recalcCategory(categoryId) {
+      const subtotalCell = document.getElementById(`subtotal-${categoryId}`);
+      const tbody = subtotalCell.closest('tbody');
+      let sum = 0;
+      tbody.querySelectorAll('tr').forEach((row) => {
+        if (row.classList.contains('subtotal-row')) return;
+        const amtInput = row.querySelector('.amount-input');
+        const val = sanitizeCurrency(amtInput.value);
+        sum += val;
+      });
+      state.subtotals[categoryId] = sum;
+      subtotalCell.textContent = formatCurrency(sum);
+      recalcTotals();
+    }
+
+    function recalcTotals() {
+      const originalDepositInput = document.getElementById('originalDeposit');
+      const totalDeposits = sanitizeCurrency(originalDepositInput.value);
+      document.getElementById('totalDepositsDisplay').textContent = formatCurrency(totalDeposits);
+      document.getElementById('finalTotalDeposits').textContent = formatCurrency(totalDeposits);
+
+      const totalDeductions = Object.values(state.subtotals).reduce((a, b) => a + b, 0);
+      document.getElementById('totalDeductionsDisplay').textContent = `- ${formatCurrency(totalDeductions)}`;
+      document.getElementById('finalTotalDeductions').textContent = `- ${formatCurrency(totalDeductions)}`;
+
+      const net = totalDeposits - totalDeductions;
+      const outcome = document.getElementById('finalOutcome');
+      if (net >= 0) {
+        outcome.textContent = `Refund Due to Tenant: ${formatCurrency(net)}`;
+      } else {
+        outcome.textContent = `Amount Owed by Tenant: ${formatCurrency(Math.abs(net))}`;
+      }
+    }
+
+    function handlePrint() {
+      window.print();
+    }
+
+    function gatherInputs() {
+      return {
+        landlordName: document.getElementById('landlordName').value,
+        landlordAddress: document.getElementById('landlordAddress').value,
+        landlordPhone: document.getElementById('landlordPhone').value,
+        landlordEmail: document.getElementById('landlordEmail').value,
+        datePrepared: document.getElementById('datePrepared').value,
+        tenantNames: document.getElementById('tenantNames').value,
+        premises: document.getElementById('premises').value,
+        forwardingAddress: document.getElementById('forwardingAddress').value,
+        moveOutDate: document.getElementById('moveOutDate').value,
+        originalDeposit: sanitizeCurrency(document.getElementById('originalDeposit').value)
+      };
+    }
+
+    function handleExportCSV() {
+      const data = gatherInputs();
+      const rows = [];
+      rows.push(['Field', 'Value']);
+      rows.push(['Landlord', data.landlordName]);
+      rows.push(['Landlord Address', data.landlordAddress]);
+      rows.push(['Landlord Phone', data.landlordPhone]);
+      rows.push(['Landlord Email', data.landlordEmail]);
+      rows.push(['Date Prepared', data.datePrepared]);
+      rows.push(['Tenant(s)', data.tenantNames]);
+      rows.push(['Premises', data.premises]);
+      rows.push(['Forwarding Address', data.forwardingAddress.replace(/\n/g, ' ') ]);
+      rows.push(['Move Out Date', data.moveOutDate]);
+      rows.push(['Original Security Deposit', data.originalDeposit]);
+
+      categories.forEach((cat) => {
+        const tbody = document.getElementById(`subtotal-${cat.id}`).closest('tbody');
+        tbody.querySelectorAll('tr').forEach((row) => {
+          if (row.classList.contains('subtotal-row')) return;
+          const descField = row.querySelector('textarea') || row.querySelector('input[type="text"]');
+          const desc = descField ? descField.value : '';
+          const amt = sanitizeCurrency(row.querySelector('.amount-input').value);
+          rows.push([`Deduction - ${cat.label}`, desc, amt]);
+        });
+        rows.push([`Subtotal ${cat.label}`, '', state.subtotals[cat.id]]);
+      });
+
+      const totalDeposits = sanitizeCurrency(document.getElementById('originalDeposit').value);
+      const totalDeductions = Object.values(state.subtotals).reduce((a, b) => a + b, 0);
+      const net = totalDeposits - totalDeductions;
+
+      rows.push(['Total Deposits Held', totalDeposits]);
+      rows.push(['Total Deductions', totalDeductions]);
+      rows.push([net >= 0 ? 'Refund Due to Tenant' : 'Amount Owed by Tenant', Math.abs(net)]);
+
+      const csvContent = rows
+        .map((r) => r.map((field) => {
+          if (field === undefined || field === null) return '';
+          const str = String(field);
+          if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+            return '"' + str.replace(/"/g, '""') + '"';
+          }
+          return str;
+        }).join(','))
+        .join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const tenant = data.tenantNames ? data.tenantNames.replace(/\s+/g, '_') : 'Tenant';
+      link.href = url;
+      link.download = `Security_Deposit_${tenant}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    function init() {
+      // Build deduction categories
+      const container = document.getElementById('deductions');
+      categories.forEach((cat) => {
+        const section = buildCategorySection(cat);
+        container.appendChild(section);
+      });
+
+      // Sync all print values initially and bind change listeners
+      document.querySelectorAll('input, textarea').forEach((el) => {
+        syncPrintValue(el);
+        el.addEventListener('input', () => {
+          syncPrintValue(el);
+          if (el.id === 'originalDeposit') {
+            recalcTotals();
+          }
+        });
+      });
+
+      recalcTotals();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
